@@ -1,7 +1,7 @@
 <?php
 include '../private/connection.php';
 
-
+//test
 $user_ID = $_SESSION['user_ID'];
 
 $sql = "SELECT g.group_ID, m.user_ID, g.name,g.description, g.date, g.picture 
