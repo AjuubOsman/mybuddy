@@ -1,9 +1,5 @@
 <?php
-include '../Private/connection.php';
-$sql = "SELECT * FROM groups";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
+$group_ID = $_GET['group_ID']
 ?>
 <div class="container mt-3">
     <h2>Make a group</h2>
@@ -21,7 +17,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label>Afbeelding:</label>
             <input type="file" class="form-control" name="picture" >
         </div>
-    <input type="hidden" name="group_ID"   value="<?= $row["group_ID"] ?>">
+    <input type="hidden" name="group_ID"   value="<?=$group_ID?>">
         <button name="submit" type="submit" class="btn btn-success">Toevoegen</button>
     </form>
 </div>

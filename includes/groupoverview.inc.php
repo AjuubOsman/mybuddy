@@ -1,7 +1,7 @@
 <?php
 include '../private/connection.php';
 
-//test
+
 $user_ID = $_SESSION['user_ID'];
 
 $sql = "SELECT g.group_ID, m.user_ID, g.name,g.description, g.date, g.picture 
@@ -52,7 +52,7 @@ $stmt->execute();
                 $stmt3->bindParam(':group_ID', $row['group_ID']);
                 $stmt3->execute();
                 $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
-                echo $row3['useradmin_ID'] .  $user_ID;
+
 
                 if ($row3['useradmin_ID'] == $user_ID){{?>
                         <td>

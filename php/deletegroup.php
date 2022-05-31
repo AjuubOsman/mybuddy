@@ -7,6 +7,13 @@ $stmt = $conn->prepare($sql);
 
 $stmt->execute();
 
+
+//$sql = 'SELECT group_ID FROM payment';
+//$stmt = $conn->prepare($sql);
+//
+//$stmt->execute();
+
+
 if($stmt->rowCount() > 0);{
 
     $group_ID = $_GET['group_ID'];
@@ -18,6 +25,11 @@ if($stmt->rowCount() > 0);{
 
 
     $stmt = $conn->prepare("DELETE FROM groups  where group_ID = :group_ID");
+    $stmt->bindParam(':group_ID' ,$group_ID);
+    $stmt->execute();
+    header('location: ../index.php?page=groupoverview');
+
+    $stmt = $conn->prepare("DELETE FROM payment  where group_ID = :group_ID");
     $stmt->bindParam(':group_ID' ,$group_ID);
     $stmt->execute();
     header('location: ../index.php?page=groupoverview');

@@ -24,12 +24,20 @@ $stmt3 = $conn->prepare($sql3);
 $stmt3->execute();
 $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
 
+$sql = "SELECT * FROM groups  where group_ID = :group_ID ";
+$stmt4 = $conn->prepare($sql);
+$stmt4->bindParam(':group_ID' ,$group_ID);
+$stmt4->execute();
+$row4 = $stmt4->fetch(PDO::FETCH_ASSOC);
 
 
 ?>
 <div class="container mt-3">
     <h2>Groepen</h2>
     <button class="btn btn-success" onclick="window.location.href='index.php?page=groupoverview'">Terug</button>
+    <div class="betaling">
+        <button  class="btn btn-success" onclick="window.location.href='index.php?page=addpayment&group_ID=<?= $row4["group_ID"] ?>'">Betaling toevoegen</button>
+    </div>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -59,12 +67,20 @@ $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
                     <td><?= $row["description"] ?></td>
                     <td><?= $row["date"] ?></td>
 
-                    <?php if ($row3['useradmin_ID'] == $user_ID){ ?>
+                    <?php
+                $sql3 = "SELECT useradmin_ID FROM groups where group_ID = :group_ID";
+                $stmt3 = $conn->prepare($sql3);
+                $stmt3->bindParam(':group_ID', $row['group_ID']);
+                $stmt3->execute();
+                $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
+
+                if ($row3['useradmin_ID'] == $user_ID){ ?>
                     <form action="php/addmember.php" method="post">
                         <div class="mb-3 mt-3">
                             <label>Members Email</label>
                             <input type="hidden" name="group_ID" value="<?= $row["group_ID"] ?>">
                             <input type="email" class="form-control" placeholder="Enter Email" name="email">
+                            <button class="btn btn-success">Toevoegen</button>
                         </div>
                     </form>
                     </tr>
@@ -76,5 +92,6 @@ $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
                         <tr>
                             <td><?= $row2["firstname"] ?></td>
                         </tr>
+
             <?php } } ?>
 

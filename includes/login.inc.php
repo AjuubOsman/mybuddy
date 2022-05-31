@@ -37,7 +37,7 @@
                                 up</button>
 
                         </div>
-                        </div>
+
 
                 </div>
             </div>
