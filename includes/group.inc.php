@@ -30,13 +30,19 @@ $stmt4->bindParam(':group_ID' ,$group_ID);
 $stmt4->execute();
 $row4 = $stmt4->fetch(PDO::FETCH_ASSOC);
 
+$sql = "SELECT * FROM payment  where group_ID = :group_ID ";
+$stmt5 = $conn->prepare($sql);
+$stmt5->bindParam(':group_ID' ,$group_ID);
+$stmt5->execute();
+$row5 = $stmt5->fetch(PDO::FETCH_ASSOC);
+
 
 ?>
 <div class="container mt-3">
     <h2>Groepen</h2>
     <button class="btn btn-success" onclick="window.location.href='index.php?page=groupoverview'">Terug</button>
     <div class="betaling">
-        <button  class="btn btn-success" onclick="window.location.href='index.php?page=addpayment&group_ID=<?= $row4["group_ID"] ?>'">Betaling toevoegen</button>
+        <button  class="btn btn-success" onclick="window.location.href='index.php?page=viewpayment&group_ID=<?= $row4["group_ID"] ?>'">Betaling Bekijken</button>
     </div>
     <table class="table table-striped">
         <thead>
@@ -93,5 +99,7 @@ $row4 = $stmt4->fetch(PDO::FETCH_ASSOC);
                             <td><?= $row2["firstname"] ?></td>
                         </tr>
 
+
             <?php } } ?>
+
 

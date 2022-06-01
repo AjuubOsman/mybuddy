@@ -4,5 +4,6 @@
 }
 
 .betaling {
-    float: right;
+    float: right; !important;
+
 }

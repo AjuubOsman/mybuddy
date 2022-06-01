@@ -3,14 +3,14 @@ include '../Private/connection.php';
 
 $group_ID = $_GET['group_ID'];
 
-$sql = "SELECT * FROM groups  where group_ID = group_ID = :group_ID ";
+$sql = "SELECT * FROM groups  where group_ID  = :group_ID ";
 $stmt4 = $conn->prepare($sql);
 $stmt4->bindParam(':group_ID' ,$group_ID);
 $stmt4->execute();
 $row4 = $stmt4->fetch(PDO::FETCH_ASSOC);
 ?>
 <div class="container mt-3">
-    <h2>Make a group</h2>
+    <h2>Make a payment</h2>
     <form action="php/addpayment.php" method="POST" enctype="multipart/form-data">
         <div class="mb-3 mt-3">
             <label>Bedrag:</label>
@@ -19,6 +19,10 @@ $row4 = $stmt4->fetch(PDO::FETCH_ASSOC);
         <div class="mb-3 mt-3">
             <label>Description:</label>
             <input type="text" class="form-control" placeholder="Enter description" name="description">
+        </div>
+        <div class="mb-3 mt-3">
+            <label>Description:</label>
+            <input type="date" class="form-control" name="date">
         </div>
 
 
