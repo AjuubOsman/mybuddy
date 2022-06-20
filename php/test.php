@@ -1,50 +1,63 @@
 <?php
+session_start();
 include '../../private/connection.php';
 
-$name = $_POST['name'];
-$description = $_POST['description'];
+$user = $_POST['user'];
+$payment_ID = $_POST['payment_ID'];
 $group_ID = $_POST['group_ID'];
+$user_ID = $_SESSION['user_ID'];
 
-$natan = "picture/" . basename($_FILES["picture"]["name"]);
+echo '<pre>'; print_r($_POST); echo '</pre>';
 
-$target_dir = "../picture/";
-$target_file = $target_dir . basename($_FILES["picture"]["name"]);
-$uploadOk = 1;
-$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-// Check if image file is a actual image or fake image
-if(isset($_POST["submit"])) {
-    echo $natan . '<br>';
-    $check = getimagesize($_FILES["picture"]["tmp_name"]);
-    if($check !== false) {
-        echo "File is an image - " . $check["mime"] . ".";
-        $uploadOk = 1;
-    } else {
-        echo "File is not an image.";
-        $uploadOk = 0;
+
+
+//
+//$sql = 'SELECT user_ID FROM users where user_ID = :user_ID';
+//$stmt = $conn->prepare($sql);
+//$stmt->bindParam(':user_ID', $user_ID['user_ID']);
+//$stmt->execute();
+//
+//$row = $stmt->fetchall(PDO::FETCH_ASSOC);
+
+
+
+$sql2 = 'SELECT * FROM userpayment where payment_ID = :payment_ID and user_ID = :user_ID';
+$stmt2 = $conn->prepare($sql2);
+$stmt2->bindParam(':payment_ID', $payment_ID);
+$stmt2->bindParam(':user_ID', $user_ID);
+
+$stmt2->execute();
+
+
+
+if ($stmt2->rowCount() == 0) {
+
+
+    //echo '<pre>'; print_r($row); echo '</pre>';
+
+    foreach($user as $person){
+
+        $stmt3 = $conn->prepare("INSERT INTO userpayment (user_ID, payment_ID)
+                    VALUES(:user_ID, :payment_ID)");
+        $stmt3->bindParam(':user_ID', $person);
+        $stmt3->bindParam(':payment_ID', $payment_ID);
+        $stmt3->execute();
+
+        $_SESSION['melding'] = 'Betaling is gekoppeld.';
     }
 
 
 
-    if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
-        // if everything is ok, try to upload file
-    } else {
-        if (move_uploaded_file($_FILES["picture"]["tmp_name"], $target_file)) {
-            echo "The file ". htmlspecialchars( basename( $_FILES["picture"]["name"])). " has been uploaded.";
-            $stmt = $conn->prepare("UPDATE groups SET name = :name, description = :description, picture = :picture WHERE group_ID = :group_ID ");
-
-            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-            $stmt->bindParam(':description', $description, PDO::PARAM_STR);
-            $stmt->bindParam(':picture' ,$natan);
-            $stmt->bindParam(':group_ID' ,$group_ID);
 
 
 
-            $stmt->execute();
 
-        } else {
-            echo "Sorry, there was an error uploading your file.";
-        }
-    }
+
+
+
+}else{
+    $_SESSION['melding'] = 'Deelnemer al gekoppeld aan deze betaling.';
 }
-?>
+
+
+//header('location: ../index.php?page=viewpayment&group_ID=' . $group_ID);

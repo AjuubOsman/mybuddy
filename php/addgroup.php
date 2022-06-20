@@ -4,7 +4,6 @@ include '../../private/connection.php';
 
 $name = $_POST['name'];
 $description = $_POST['description'];
-$group_ID = $_POST['group_ID'];
 $user_ID = $_SESSION['user_ID'];
 
 

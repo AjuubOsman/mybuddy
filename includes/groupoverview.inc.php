@@ -13,13 +13,24 @@ $stmt = $conn->prepare($sql);
 $stmt->execute();
 
 
+$sql2 = "SELECT firstname
+FROM users WHERE user_ID = $user_ID";
+$stmt2 = $conn->prepare($sql2);
+$stmt2->execute();
 
+
+$row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
 ?>
 <div class="container mt-3">
     <h2>Groepen</h2>
 
 
     <button class="btn btn-success" onclick="window.location.href='index.php?page=addgroup'">Toevoegen</button>
+
+    <div class="betaling">
+        <td >Welkom <?= $row2["firstname"] ?></td>
+    </div>
+
     <table class="table table-striped">
         <thead>
         <tr>

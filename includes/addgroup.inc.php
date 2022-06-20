@@ -1,6 +1,3 @@
-<?php
-$group_ID = $_GET['group_ID']
-?>
 <div class="container mt-3">
     <h2>Make a group</h2>
     <form action="php/addgroup.php" method="POST" enctype="multipart/form-data">
@@ -17,7 +14,6 @@ $group_ID = $_GET['group_ID']
             <label>Afbeelding:</label>
             <input type="file" class="form-control" name="picture" >
         </div>
-    <input type="hidden" name="group_ID"   value="<?=$group_ID?>">
         <button name="submit" type="submit" class="btn btn-success">Toevoegen</button>
     </form>
 </div>
